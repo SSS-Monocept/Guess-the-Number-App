@@ -1,13 +1,41 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
+import { StyleSheet, View, Alert } from "react-native";
+import React, { useState } from "react";
 import HeadingBox from "../components/HeadingBox";
-import PlayBox from "../components/PlayBox";
+import PlayBoxUI from "../components/PlayBoxUI";
 
 export default function StartGameScreen() {
+  const [num, setNum] = useState(null);
+
+  const validNum = () => {
+    if (num < 0 || num > 99) {
+      Alert.alert("Warning !!", "Number can't be negative or more than 99!", [
+        {
+          text: "OK",
+          onPress: () => setNum(null),
+        },
+      ]);
+    } else {
+      Alert.alert("Valid Number", `The number is ${num}`);
+    }
+  };
+
+  const reset = () => {
+    setNum(null);
+  };
+
   return (
     <View style={styles.container}>
       <HeadingBox>Guess My Number</HeadingBox>
-      <PlayBox />
+      <PlayBoxUI
+        title="Enter a Number"
+        userInput="Enable"
+        leftButtonText="Reset"
+        rightButtonText="Confirm"
+        leftButtonUse={reset}
+        rightButtonUse={validNum}
+        num={num}
+        setNum={setNum}
+      />
     </View>
   );
 }
