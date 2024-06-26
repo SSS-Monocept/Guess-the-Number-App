@@ -2,12 +2,19 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
+import GameScreen from "./screens/GameScreen";
+import React, { useState } from "react";
 
 //rnfs: for boilerplate component
 export default function App() {
+  const [isValidNum, setIsValidNum] = useState(false);
   return (
     <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.container}>
-      <StartGameScreen />
+      {isValidNum ? (
+        <GameScreen />
+      ) : (
+        <StartGameScreen setIsValidNum={setIsValidNum} />
+      )}
       <StatusBar style="light" />
     </LinearGradient>
   );

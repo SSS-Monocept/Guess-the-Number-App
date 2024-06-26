@@ -12,8 +12,16 @@ export default function PlayBoxUI({
   num,
   setNum,
 }) {
+  let parentContainerStyles = styles.parentContainer;
+
+  if (userInput != "Enable") {
+    parentContainerStyles = [
+      styles.parentContainer,
+      styles.modifiedParentContainer,
+    ];
+  }
   return (
-    <View style={styles.parentContainer}>
+    <View style={parentContainerStyles}>
       <Text style={styles.subHeadingText}>{title}</Text>
       {userInput === "Enable" && (
         <TextInput
@@ -61,5 +69,10 @@ const styles = StyleSheet.create({
     color: "#f8a406",
     fontSize: 30,
     textAlign: "center",
+  },
+  modifiedParentContainer: {
+    height: 150,
+    paddingTop: 14,
+    paddingBottom: 14,
   },
 });

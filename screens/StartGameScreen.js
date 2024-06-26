@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HeadingBox from "../components/HeadingBox";
 import PlayBoxUI from "../components/PlayBoxUI";
 
-export default function StartGameScreen() {
+export default function StartGameScreen({ setIsValidNum }) {
   const [num, setNum] = useState(null);
 
   const validNum = () => {
@@ -15,7 +15,12 @@ export default function StartGameScreen() {
         },
       ]);
     } else {
-      Alert.alert("Valid Number", `The number is ${num}`);
+      Alert.alert("Valid Number", `The number is ${num}`, [
+        {
+          text: "OK",
+          onPress: () => setIsValidNum(true),
+        },
+      ]);
     }
   };
 
