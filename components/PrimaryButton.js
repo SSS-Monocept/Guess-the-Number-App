@@ -40,7 +40,7 @@ const commonStyles = StyleSheet.create({
     height: 50,
     width: 170,
     borderRadius: 40,
-    margin: 2,
+    margin: 8,
     backgroundColor: "#940e4c",
   },
   text: {
@@ -58,7 +58,7 @@ const stylesUI1 = StyleSheet.create({
 const stylesUI2 = StyleSheet.create({
   container: {
     height: 50,
-    width: 110,
+    width: 135,
   },
   specialText1: {
     fontSize: 30,

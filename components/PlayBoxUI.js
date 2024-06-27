@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   modifiedParentContainer: {
     height: 150,
-    width: 300,
+    width: 350,
     padding: 10,
   },
 });
