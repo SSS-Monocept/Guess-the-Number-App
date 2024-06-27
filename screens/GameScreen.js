@@ -1,7 +1,8 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, FlatList } from "react-native";
 import React, { useState } from "react";
 import HeadingBox from "../components/HeadingBox";
 import PlayBoxUI from "../components/PlayBoxUI";
+import ListItemBox from "../components/ListItemBox";
 
 export default function GameScreen({ userNum }) {
   // const [randNum, setRandNum] = useState(null);
@@ -34,6 +35,9 @@ export default function GameScreen({ userNum }) {
         leftButtonUse={() => alert("Clicked Left !")}
         rightButtonUse={() => alert("Clicked Right !")}
       />
+      <View style={styles.listContainer}>
+        <ListItemBox id={4} guessedNum={userNum} />
+      </View>
     </View>
   );
 }
@@ -41,9 +45,10 @@ export default function GameScreen({ userNum }) {
 const styles = StyleSheet.create({
   parentContainer: {
     alignItems: "center",
-    justifyContent: "center",
     gap: 30,
     marginTop: 70,
+    borderWidth: 2,
+    height: "90%",
   },
   container: {
     borderColor: "#f8a406",
@@ -63,4 +68,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: "bold",
   },
+  listContainer: {},
 });
