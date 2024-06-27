@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HeadingBox from "../components/HeadingBox";
 import PlayBoxUI from "../components/PlayBoxUI";
 
-export default function GameScreen({}) {
+export default function GameScreen({ userNum }) {
   // const [randNum, setRandNum] = useState(null);
 
   // useEffect(() => {
@@ -21,6 +21,7 @@ export default function GameScreen({}) {
   return (
     <View style={styles.container}>
       <HeadingBox>Opponent's Guess</HeadingBox>
+      <HeadingBox>{userNum}</HeadingBox>
       <PlayBoxUI
         title="Higher or Lower"
         userInput="Disable"

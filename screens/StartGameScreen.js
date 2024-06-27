@@ -3,22 +3,26 @@ import React, { useState } from "react";
 import HeadingBox from "../components/HeadingBox";
 import PlayBoxUI from "../components/PlayBoxUI";
 
-export default function StartGameScreen({ setIsValidNum }) {
+export default function StartGameScreen({ setIsValidNum, setUserNum }) {
   const [num, setNum] = useState(null);
 
   const validNum = () => {
-    if (num < 0 || num > 99) {
-      Alert.alert("Warning !!", "Number can't be negative or more than 99!", [
-        {
-          text: "OK",
-          onPress: () => setNum(null),
-        },
-      ]);
+    if (num < 0 || num > 99 || num === null) {
+      Alert.alert(
+        "Warning !!",
+        "Number can't be null or negative or more than 99!",
+        [
+          {
+            text: "OK",
+            onPress: () => setNum(null),
+          },
+        ]
+      );
     } else {
       Alert.alert("Valid Number", `The number is ${num}`, [
         {
           text: "OK",
-          onPress: () => setIsValidNum(true),
+          onPress: () => [setIsValidNum(true), setUserNum(num)],
         },
       ]);
     }

@@ -8,12 +8,16 @@ import React, { useState } from "react";
 //rnfs: for boilerplate component
 export default function App() {
   const [isValidNum, setIsValidNum] = useState(false);
+  const [userNum, setUserNum] = useState(null);
   return (
     <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.container}>
       {isValidNum ? (
-        <GameScreen />
+        <GameScreen userNum={userNum} />
       ) : (
-        <StartGameScreen setIsValidNum={setIsValidNum} />
+        <StartGameScreen
+          setIsValidNum={setIsValidNum}
+          setUserNum={setUserNum}
+        />
       )}
       <StatusBar style="light" />
     </LinearGradient>

@@ -32,8 +32,10 @@ export default function PlayBoxUI({
         />
       )}
       <View style={styles.childContainer}>
-        <PrimaryButton onPress={leftButtonUse}>{leftButtonText}</PrimaryButton>
-        <PrimaryButton onPress={rightButtonUse}>
+        <PrimaryButton onPress={leftButtonUse} userInput={userInput}>
+          {leftButtonText}
+        </PrimaryButton>
+        <PrimaryButton onPress={rightButtonUse} userInput={userInput}>
           {rightButtonText}
         </PrimaryButton>
       </View>
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   },
   modifiedParentContainer: {
     height: 150,
-    paddingTop: 14,
-    paddingBottom: 14,
+    width: 300,
+    padding: 10,
   },
 });
