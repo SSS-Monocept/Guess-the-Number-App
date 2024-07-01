@@ -19,12 +19,21 @@ export default function StartGameScreen({ setIsValidNum, setUserNum }) {
         ]
       );
     } else {
-      Alert.alert("Valid Number", `The number is ${num}`, [
-        {
-          text: "OK",
-          onPress: () => [setIsValidNum(true), setUserNum(num)],
-        },
-      ]);
+      Alert.alert(
+        "Number Confirmation",
+        `You have entered ${num}. Please confirm.`,
+        [
+          {
+            text: "Cancel",
+            onPress: () => setNum(null),
+            style: "cancel",
+          },
+          {
+            text: "Confirm",
+            onPress: () => [setIsValidNum(true), setUserNum(num)],
+          },
+        ]
+      );
     }
   };
 

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 30,
     elevation: 8,
+    margin: 5,
   },
   text: {
     color: "White",

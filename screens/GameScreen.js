@@ -1,42 +1,87 @@
-import { StyleSheet, View, Text, FlatList } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, FlatList, Alert } from "react-native";
 import HeadingBox from "../components/HeadingBox";
 import PlayBoxUI from "../components/PlayBoxUI";
 import ListItemBox from "../components/ListItemBox";
 
-export default function GameScreen({ userNum }) {
-  // const [randNum, setRandNum] = useState(null);
+function generateRandomBetween(min, max, exclude) {
+  const rndNum = Math.floor(Math.random() * (max - min)) + min;
 
-  // useEffect(() => {
-  //   // Generate initial random number when component mounts
-  //   setRandNum(randomNumberInRange(0, 100));
-  // }, []);
+  if (rndNum === exclude) {
+    return generateRandomBetween(min, max, exclude);
+  } else {
+    return rndNum;
+  }
+}
 
-  // function randomNumberInRange(min, max) {
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // }
+let minBound = 1;
+let maxBound = 100;
 
-  // const handleClick = () => {
-  //   setRandNum(randomNumberInRange(0, 100)); // Generates a number between 0 and 100 (inclusive)
-  // };
+export default function GameScreen({ userNum, runIsGameOver }) {
+  console.log("Ram");
+  const initialGuess = generateRandomBetween(1, 100, userNum);
+  const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessRounds, setGuessRounds] = useState([currentGuess]);
+
+  useEffect(() => {
+    if (currentGuess === userNum) {
+      console.log("Inside useeffect Gamescreen when num matches");
+      runIsGameOver();
+    }
+  }, [currentGuess, userNum, runIsGameOver]);
+
+  function nextGuessHandler(direction) {
+    if (
+      (direction === "-" && currentGuess < userNum) ||
+      (direction === "+" && currentGuess > userNum)
+    ) {
+      Alert.alert("Invalid Guess", "You know that this is wrong...", [
+        {
+          text: "Sorry!",
+          style: "cancel",
+        },
+      ]);
+      return;
+    }
+
+    if (direction === "-") {
+      maxBound = currentGuess;
+    } else if (direction === "+") {
+      minBound = currentGuess + 1;
+    }
+    console.log("Shyam", currentGuess);
+
+    const nextRandGuess = generateRandomBetween(
+      minBound,
+      maxBound,
+      currentGuess
+    );
+    setCurrentGuess(nextRandGuess);
+    // setGuessRounds((prevRounds) => [nextRandGuess, ...prevRounds]);
+  }
+
   return (
     <View style={styles.parentContainer}>
       <HeadingBox>Opponent's Guess</HeadingBox>
       <View style={styles.container}>
-        <Text style={styles.text}>{userNum}</Text>
+        <Text style={styles.text}>{currentGuess}</Text>
       </View>
       <PlayBoxUI
         title="Higher or Lower"
         userInput="Disable"
         leftButtonText="-"
         rightButtonText="+"
-        // leftButtonUse={decreaseRandNum}
-        // rightButtonUse={increaseRandNum}
-        leftButtonUse={() => alert("Clicked Left !")}
-        rightButtonUse={() => alert("Clicked Right !")}
+        leftButtonUse={nextGuessHandler.bind(this, "-")}
+        rightButtonUse={nextGuessHandler.bind(this, "+")}
       />
       <View style={styles.listContainer}>
-        <ListItemBox id={4} guessedNum={userNum} />
+        {/* <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => (
+            <ListItemBox id={itemData.index + 1} guessedNum={itemData.item} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        /> */}
       </View>
     </View>
   );
@@ -45,9 +90,8 @@ export default function GameScreen({ userNum }) {
 const styles = StyleSheet.create({
   parentContainer: {
     alignItems: "center",
-    gap: 30,
     marginTop: 70,
-    borderWidth: 2,
+    gap: 30,
     height: "90%",
   },
   container: {
@@ -68,5 +112,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: "bold",
   },
-  listContainer: {},
+  listContainer: {
+    flex: 1,
+    width: "100%",
+    padding: 10,
+    margin: 10,
+  },
 });
