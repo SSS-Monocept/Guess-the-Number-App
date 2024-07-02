@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import HeadingBox from "../components/HeadingBox";
 import PlayBoxUI from "../components/PlayBoxUI";
 
-export default function StartGameScreen({ setIsValidNum, setUserNum }) {
+export default function StartGameScreen({
+  isValidNumHandler,
+  setUserNumHandler,
+}) {
   const [num, setNum] = useState(null);
 
   const validNum = () => {
@@ -30,7 +33,7 @@ export default function StartGameScreen({ setIsValidNum, setUserNum }) {
           },
           {
             text: "Confirm",
-            onPress: () => [setIsValidNum(true), setUserNum(num)],
+            onPress: () => [setUserNumHandler(num), isValidNumHandler()],
           },
         ]
       );

@@ -18,19 +18,21 @@ let minBound = 1;
 let maxBound = 100;
 
 export default function GameScreen({ userNum, runIsGameOver }) {
-  console.log("Ram");
+  // console.log("Game starts with userNum:", userNum);
   const initialGuess = generateRandomBetween(1, 100, userNum);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([currentGuess]);
 
   useEffect(() => {
-    if (currentGuess === userNum) {
-      console.log("Inside useeffect Gamescreen when num matches");
+    // console.log("useEffect triggered:", currentGuess, userNum);
+    if (currentGuess == userNum) {
+      // console.log("Correct guess!");
       runIsGameOver();
     }
   }, [currentGuess, userNum, runIsGameOver]);
 
   function nextGuessHandler(direction) {
+    // console.log("nextGuessHandler triggered with direction:", direction);
     if (
       (direction === "-" && currentGuess < userNum) ||
       (direction === "+" && currentGuess > userNum)
@@ -49,7 +51,6 @@ export default function GameScreen({ userNum, runIsGameOver }) {
     } else if (direction === "+") {
       minBound = currentGuess + 1;
     }
-    console.log("Shyam", currentGuess);
 
     const nextRandGuess = generateRandomBetween(
       minBound,
@@ -57,7 +58,7 @@ export default function GameScreen({ userNum, runIsGameOver }) {
       currentGuess
     );
     setCurrentGuess(nextRandGuess);
-    // setGuessRounds((prevRounds) => [nextRandGuess, ...prevRounds]);
+    setGuessRounds((prevRounds) => [nextRandGuess, ...prevRounds]);
   }
 
   return (
@@ -75,13 +76,13 @@ export default function GameScreen({ userNum, runIsGameOver }) {
         rightButtonUse={nextGuessHandler.bind(this, "+")}
       />
       <View style={styles.listContainer}>
-        {/* <FlatList
+        <FlatList
           data={guessRounds}
           renderItem={(itemData) => (
             <ListItemBox id={itemData.index + 1} guessedNum={itemData.item} />
           )}
           keyExtractor={(item, index) => index.toString()}
-        /> */}
+        />
       </View>
     </View>
   );
@@ -111,11 +112,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 5,
     fontWeight: "bold",
-  },
-  listContainer: {
-    flex: 1,
-    width: "100%",
-    padding: 10,
-    margin: 10,
   },
 });

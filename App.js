@@ -11,12 +11,15 @@ export default function App() {
   const [userNum, setUserNum] = useState(null);
   const [gameIsOver, setGameIsOver] = useState(false);
 
-  // useEffect(() => {
-  //   if (gameIsOver) {
-  //     setIsValidNum(false);
-  //     setUserNum(null);
-  //   }
-  // }, [gameIsOver]);
+  function setUserNumHandler(num) {
+    setUserNum(num);
+  }
+
+  function isValidNumHandler() {
+    console.log("Inside isValidHandler function in App.js");
+    setIsValidNum(true);
+    setGameIsOver(false);
+  }
 
   function runIsGameOver() {
     console.log("Inside runIsGameOver in App.js");
@@ -24,14 +27,17 @@ export default function App() {
   }
 
   let screen = (
-    <StartGameScreen setIsValidNum={setIsValidNum} setUserNum={setUserNum} />
+    <StartGameScreen
+      isValidNumHandler={isValidNumHandler}
+      setUserNumHandler={setUserNumHandler}
+    />
   );
 
   if (isValidNum && !gameIsOver) {
     screen = <GameScreen userNum={userNum} runIsGameOver={runIsGameOver} />;
   }
 
-  if (gameIsOver && !isValidNum) {
+  if (gameIsOver && isValidNum) {
     screen = <GameOverScreen />;
   }
 
