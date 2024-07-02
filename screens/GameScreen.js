@@ -27,9 +27,14 @@ export default function GameScreen({ userNum, runIsGameOver }) {
     // console.log("useEffect triggered:", currentGuess, userNum);
     if (currentGuess == userNum) {
       // console.log("Correct guess!");
-      runIsGameOver();
+      runIsGameOver(guessRounds.length);
     }
   }, [currentGuess, userNum, runIsGameOver]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
 
   function nextGuessHandler(direction) {
     // console.log("nextGuessHandler triggered with direction:", direction);

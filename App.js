@@ -10,20 +10,27 @@ export default function App() {
   const [isValidNum, setIsValidNum] = useState(false);
   const [userNum, setUserNum] = useState(null);
   const [gameIsOver, setGameIsOver] = useState(false);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   function setUserNumHandler(num) {
     setUserNum(num);
   }
 
   function isValidNumHandler() {
-    console.log("Inside isValidHandler function in App.js");
     setIsValidNum(true);
     setGameIsOver(false);
   }
 
-  function runIsGameOver() {
-    console.log("Inside runIsGameOver in App.js");
+  function runIsGameOver(receivedRoundNum) {
+    setGuessRounds(receivedRoundNum);
     setGameIsOver(true);
+  }
+
+  function onStartNewGameHandler() {
+    setUserNum(null);
+    setIsValidNum(false);
+    setGameIsOver(true);
+    setGuessRounds(0);
   }
 
   let screen = (
@@ -34,11 +41,23 @@ export default function App() {
   );
 
   if (isValidNum && !gameIsOver) {
-    screen = <GameScreen userNum={userNum} runIsGameOver={runIsGameOver} />;
+    screen = (
+      <GameScreen
+        userNum={userNum}
+        runIsGameOver={runIsGameOver}
+        numOfRounds={guessRounds}
+      />
+    );
   }
 
   if (gameIsOver && isValidNum) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        roundsNumber={guessRounds}
+        userNumber={userNum}
+        onStartNewGame={onStartNewGameHandler}
+      />
+    );
   }
 
   return (
